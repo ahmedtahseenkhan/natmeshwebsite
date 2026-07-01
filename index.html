@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NatMesh · Network Configuration Security Auditor</title>
+<meta name="description" content="Offline-first, multi-vendor configuration auditor — 202 rules · 28 parsers · 6 compliance frameworks. CMMC 2.0, DISA STIG, PCI-DSS 4.0, NIST 800-53. Air-gap compatible.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#0a0a0a"/>
+  <rect x="60" y="60" width="80" height="80" fill="none" stroke="#f5a524" stroke-width="3"/>
+  <path d="M58 58 h10 v3 h-7 v7 h-3 z" fill="#f5a524"/>
+  <path d="M142 58 h-10 v3 h7 v7 h3 z" fill="#f5a524"/>
+  <path d="M58 142 h10 v-3 h-7 v-7 h-3 z" fill="#f5a524"/>
+  <path d="M142 142 h-10 v-3 h7 v-7 h3 z" fill="#f5a524"/>
+  <text x="100" y="108" text-anchor="middle" font-family="monospace" font-size="22" font-weight="700" fill="#f5a524">NM</text>
+</svg>
+</template>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     TOP CLASSIFICATION BAR
+═══════════════════════════════════════════════════════════ -->
+<div class="classbar top" role="banner" aria-label="System status">
+  <div class="classbar-track">
+    <span><span class="brandcase">NatMesh</span> · CSC · BUILD 1.4.2</span>
+    <span data-i18n="cb.rules">RULES 202 / 202 LOADED</span>
+    <span data-i18n="cb.parsers">PARSERS 28 ACTIVE</span>
+    <span data-utc-clock>—</span>
+    <span data-i18n="cb.offline">OFFLINE · NO TELEMETRY</span>
+    <span data-i18n="cb.opuse">FOR OPERATIONAL USE</span>
+    <span><span class="brandcase">NatMesh</span> · CSC · BUILD 1.4.2</span>
+    <span data-i18n="cb.rules">RULES 202 / 202 LOADED</span>
+    <span data-i18n="cb.parsers">PARSERS 28 ACTIVE</span>
+    <span data-utc-clock>—</span>
+    <span data-i18n="cb.offline">OFFLINE · NO TELEMETRY</span>
+    <span data-i18n="cb.opuse">FOR OPERATIONAL USE</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand" aria-label="NatMesh home">
+      <span class="brand-mark">NM</span>
+      <span>
+        <span class="brand-name">NatMesh</span><span class="brand-tag" data-i18n="brand.tag">CONFIG · SECURITY · AUDIT</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="#scanner" data-i18n="nav.scanner">Scanner</a>
+      <a href="#compliance" data-i18n="nav.compliance">Compliance</a>
+      <a href="#comparison" data-i18n="nav.vs">vs Nipper</a>
+      <a href="#integrity" data-i18n="nav.integrity">Integrity</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+      <a href="#contact" class="cta" data-i18n="nav.cta">Request License</a>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Language">
+        <span class="lang-opt" data-lang="en">EN</span><span class="lang-sep">/</span><span class="lang-opt" data-lang="tr">TR</span>
+      </button>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-drawer" id="mobile-drawer">
+  <a href="#scanner" data-i18n="nav.scanner">Scanner</a>
+  <a href="#compliance" data-i18n="nav.compliance">Compliance</a>
+  <a href="#comparison" data-i18n="nav.vs">vs Nipper</a>
+  <a href="#integrity" data-i18n="nav.integrity">Integrity</a>
+  <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+  <a href="#contact" data-i18n="nav.cta">Request License</a>
+  <button class="lang-toggle drawer" id="lang-toggle-mobile" aria-label="Language">
+    <span class="lang-opt" data-lang="en">EN</span><span class="lang-sep">/</span><span class="lang-opt" data-lang="tr">TR</span>
+  </button>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="shell">
+    <div class="hero-grid">
+
+      <div class="hero-text">
+
+        <h1 class="h-display" data-i18n="hero.h1">
+          Every misconfig.<br>
+          <span class="amber">Surfaced.</span><br>
+          Before the breach.
+        </h1>
+
+        <p class="hero-lede" data-i18n="hero.lede">
+          NatMesh is an <strong>offline-first, multi-vendor</strong> network configuration
+          auditor for defense, finance, and DevSecOps teams. Drop a config in.
+          Get back a CVSS-scored, compliance-mapped, auditor-ready finding report —
+          without a single packet hitting your network.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#pricing" class="btn btn-primary btn-stamp" data-i18n="hero.btn1">
+            Request License
+            <span class="arrow">→</span>
+          </a>
+          <a href="#scanner" class="btn" data-i18n="hero.btn2">View live scan</a>
+        </div>
+
+        <div class="hero-fact-grid">
+          <div class="hero-fact">
+            <div class="hero-fact-num"><span data-count="202">0</span></div>
+            <div class="hero-fact-lbl" data-i18n="hero.fact1">Security rules</div>
+          </div>
+          <div class="hero-fact">
+            <div class="hero-fact-num"><span data-count="28">0</span></div>
+            <div class="hero-fact-lbl" data-i18n="hero.fact2">Vendor parsers</div>
+          </div>
+          <div class="hero-fact">
+            <div class="hero-fact-num"><span data-count="6">0</span></div>
+            <div class="hero-fact-lbl" data-i18n="hero.fact3">Frameworks</div>
+          </div>
+          <div class="hero-fact">
+            <div class="hero-fact-num"><span data-count="0">0</span></div>
+            <div class="hero-fact-lbl" data-i18n="hero.fact4">Phone-home calls</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TERMINAL -->
+      <div class="hero-visual">
+        <div class="term">
+          <div class="term-frame"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+          <div class="term-head">
+            <span class="id">CLR·CSC</span>
+            <span><span data-i18n="term.file">FILE:</span> <span id="hero-term-file" style="color:var(--txt-2)">edge-fw-01.cfg</span></span>
+            <span class="right">
+              <span><span data-i18n="term.found">FOUND</span> <span id="hero-term-found" style="color:var(--amber);font-weight:600">0</span></span>
+              <span class="live" data-i18n="term.live">LIVE</span>
+            </span>
+          </div>
+          <div class="term-body" id="hero-term-body"></div>
+          <div class="term-footer">
+            <span><span data-i18n="term.status">STATUS</span> · <span id="hero-term-stat" style="color:var(--amber);font-weight:600">BOOT</span></span>
+            <span class="progress"><span class="progress-fill" id="hero-term-prog"></span></span>
+            <span>SHA · 0xa3f4</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     VENDOR MARQUEE
+═══════════════════════════════════════════════════════════ -->
+<div class="vendor-strip" aria-label="Supported vendors">
+  <span class="vendor-strip-label" data-i18n="vendor.label">28 PARSERS · CERTIFIED</span>
+  <div class="vendor-marquee">
+    <!-- duplicated 2x for seamless loop -->
+    <span class="vendor-item">CISCO IOS <span class="ok">OK</span></span>
+    <span class="vendor-item">IOS-XE <span class="ok">OK</span></span>
+    <span class="vendor-item">NX-OS <span class="ok">OK</span></span>
+    <span class="vendor-item">CISCO ASA <span class="ok">OK</span></span>
+    <span class="vendor-item">JUNIPER JUNOS <span class="ok">OK</span></span>
+    <span class="vendor-item">PALO ALTO PAN-OS <span class="ok">OK</span></span>
+    <span class="vendor-item">FORTINET FORTIOS <span class="ok">OK</span></span>
+    <span class="vendor-item">CHECK POINT <span class="ok">OK</span></span>
+    <span class="vendor-item">HUAWEI VRP <span class="ok">OK</span></span>
+    <span class="vendor-item">H3C COMWARE <span class="ok">OK</span></span>
+    <span class="vendor-item">F5 BIG-IP <span class="ok">OK</span></span>
+    <span class="vendor-item">HPE ARUBA <span class="ok">OK</span></span>
+    <span class="vendor-item">EXTREME <span class="ok">OK</span></span>
+    <span class="vendor-item">SANGFOR <span class="ok">OK</span></span>
+    <span class="vendor-item">FORCEPOINT <span class="ok">OK</span></span>
+    <span class="vendor-item">TRELLIX <span class="ok">OK</span></span>
+    <span class="vendor-item">TREND MICRO <span class="ok">OK</span></span>
+    <span class="vendor-item">NETSKOPE <span class="ok">OK</span></span>
+    <span class="vendor-item">PROOFPOINT <span class="ok">OK</span></span>
+    <span class="vendor-item">BEYONDTRUST <span class="ok">OK</span></span>
+    <span class="vendor-item">IBM <span class="ok">OK</span></span>
+    <span class="vendor-item">ERICSSON <span class="ok">OK</span></span>
+
+    <span class="vendor-item">CISCO IOS <span class="ok">OK</span></span>
+    <span class="vendor-item">IOS-XE <span class="ok">OK</span></span>
+    <span class="vendor-item">NX-OS <span class="ok">OK</span></span>
+    <span class="vendor-item">CISCO ASA <span class="ok">OK</span></span>
+    <span class="vendor-item">JUNIPER JUNOS <span class="ok">OK</span></span>
+    <span class="vendor-item">PALO ALTO PAN-OS <span class="ok">OK</span></span>
+    <span class="vendor-item">FORTINET FORTIOS <span class="ok">OK</span></span>
+    <span class="vendor-item">CHECK POINT <span class="ok">OK</span></span>
+    <span class="vendor-item">HUAWEI VRP <span class="ok">OK</span></span>
+    <span class="vendor-item">H3C COMWARE <span class="ok">OK</span></span>
+    <span class="vendor-item">F5 BIG-IP <span class="ok">OK</span></span>
+    <span class="vendor-item">HPE ARUBA <span class="ok">OK</span></span>
+    <span class="vendor-item">EXTREME <span class="ok">OK</span></span>
+    <span class="vendor-item">SANGFOR <span class="ok">OK</span></span>
+    <span class="vendor-item">FORCEPOINT <span class="ok">OK</span></span>
+    <span class="vendor-item">TRELLIX <span class="ok">OK</span></span>
+    <span class="vendor-item">TREND MICRO <span class="ok">OK</span></span>
+    <span class="vendor-item">NETSKOPE <span class="ok">OK</span></span>
+    <span class="vendor-item">PROOFPOINT <span class="ok">OK</span></span>
+    <span class="vendor-item">BEYONDTRUST <span class="ok">OK</span></span>
+    <span class="vendor-item">IBM <span class="ok">OK</span></span>
+    <span class="vendor-item">ERICSSON <span class="ok">OK</span></span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     LIVE SCANNER DEMO (the showstopper)
+═══════════════════════════════════════════════════════════ -->
+<section class="scanner-section" id="scanner">
+  <div class="shell">
+
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s1.ey">§ 01 · ENGINE</span><span>SECTION-A</span></div>
+        <h2 class="h-section" data-i18n="s1.h">Watch a real config<br>get torn apart.</h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s1.lede">
+          No agents. No SNMP polling. No credentials. Drop the exported config
+          and the engine identifies vendor, walks every rule pack, and writes
+          a finding with CVE, CVSS, STIG, and remediation in seconds.
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="scanner-tabs" role="tablist">
+        <button class="scanner-tab active" data-key="edge-fw-01.cfg" role="tab">edge-fw-01.cfg</button>
+        <button class="scanner-tab" data-key="dc-router-12.cfg" role="tab">dc-router-12.cfg</button>
+        <button class="scanner-tab" data-key="dmz-asa-02.cfg" role="tab">dmz-asa-02.cfg</button>
+      </div>
+
+      <div class="scanner-wrap">
+
+        <div class="scanner-config">
+          <div class="scanner-config-head">
+            <div>
+              <span class="filename" id="scanner-file">edge-fw-01.cfg</span>
+              <span style="margin-left:14px">VENDOR · <span id="scanner-vendor" style="color:var(--txt-2)">CISCO IOS-XE</span></span>
+            </div>
+            <div>SHA · <span id="scanner-sha" style="color:var(--txt-2)">0xa3f4</span></div>
+          </div>
+          <div class="scanner-config-body" id="scanner-config-body">
+            <!-- populated by scanner.js -->
+          </div>
+          <div class="scan-beam" id="scan-beam"></div>
+        </div>
+
+        <div class="scanner-findings">
+          <div class="scanner-findings-head">
+            <span data-i18n="s1.stream">FINDINGS · STREAM</span>
+            <span class="count" id="scanner-finding-count">0 findings</span>
+          </div>
+          <div class="scanner-findings-list" id="scanner-findings-list">
+            <!-- populated by scanner.js -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="scanner-progress-strip">
+        <span>SCAN <span class="scanner-progress-info" id="scanner-pct">0%</span></span>
+        <div class="scanner-progress-bar">
+          <div class="scanner-progress-fill" id="scanner-progress-fill"></div>
+        </div>
+        <span>
+          LINES <span style="color:var(--amber)" id="scanner-lines">0</span> ·
+          FINDINGS <span style="color:var(--amber)" id="scanner-find">0</span> ·
+          CRIT <span style="color:var(--crit)" id="scanner-crit">0</span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     SCORING ENGINE
+═══════════════════════════════════════════════════════════ -->
+<section id="scoring">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s2.ey">§ 02 · SCORING</span><span data-i18n="s2.ey2">FOUR SYSTEMS · ONE FINDING</span></div>
+        <h2 class="h-section" data-i18n="s2.h">Risk you can defend<br>in front of an auditor.</h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s2.lede">
+          Every finding lands with four independent scores. CVSS for severity,
+          STIG CAT for DOD posture, Cisco SIR for vendor alignment, and a 0–100
+          composite weighted by device role — because the same misconfig on
+          a border firewall is not the same risk as on an access switch.
+        </p>
+      </div>
+    </div>
+
+    <div class="score-grid reveal">
+
+      <div class="score-card">
+        <div class="num">SCORE · 01 / 04 · <span class="amber">CVSS v3.1</span></div>
+        <div class="gauge">
+          <svg viewBox="0 0 200 130" class="gauge-svg" data-gauge="9.8" data-max="10" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#f5a524" stroke-width="10" stroke-linecap="round" class="gauge-arc-fill"/>
+            <line x1="100" y1="110" x2="100" y2="40" stroke="#fafaf9" stroke-width="2.5" class="gauge-needle" style="transform-origin:100px 110px;transform:rotate(-90deg);transition:none"/>
+            <circle cx="100" cy="110" r="6" fill="#0a0a0a" stroke="#f5a524" stroke-width="2"/>
+            <text x="20" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">0.0</text>
+            <text x="170" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">10.0</text>
+            <text x="100" y="78" font-family="IBM Plex Sans Condensed" font-size="22" font-weight="700" text-anchor="middle" fill="#fafaf9">9.8</text>
+            <text x="100" y="92" font-family="IBM Plex Mono" font-size="8" letter-spacing="1.5" text-anchor="middle" fill="#57534e">CRITICAL</text>
+          </svg>
+        </div>
+        <h4>CVSS v3.1</h4>
+        <p data-i18n="s2.c1">Per-finding base, temporal, and environmental scores. Standard, defensible, and machine-parseable for SIEM ingestion.</p>
+      </div>
+
+      <div class="score-card">
+        <div class="num">SCORE · 02 / 04 · <span class="amber">STIG · CAT</span></div>
+        <div class="gauge">
+          <svg viewBox="0 0 200 130" class="gauge-svg" data-gauge="1" data-max="3" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#f87171" stroke-width="10" stroke-linecap="round" class="gauge-arc-fill"/>
+            <line x1="100" y1="110" x2="100" y2="40" stroke="#fafaf9" stroke-width="2.5" class="gauge-needle" style="transform-origin:100px 110px;transform:rotate(-90deg);transition:none"/>
+            <circle cx="100" cy="110" r="6" fill="#0a0a0a" stroke="#f5a524" stroke-width="2"/>
+            <text x="20" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">III</text>
+            <text x="170" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">I</text>
+            <text x="100" y="78" font-family="IBM Plex Sans Condensed" font-size="22" font-weight="700" text-anchor="middle" fill="#fafaf9">CAT I</text>
+            <text x="100" y="92" font-family="IBM Plex Mono" font-size="8" letter-spacing="1.5" text-anchor="middle" fill="#57534e">DISA · RMF</text>
+          </svg>
+        </div>
+        <h4>DISA STIG · CAT</h4>
+        <p data-i18n="s2.c2">Maps every finding to Category I/II/III against the relevant DISA STIG. Drops directly into your RMF package.</p>
+      </div>
+
+      <div class="score-card">
+        <div class="num">SCORE · 03 / 04 · <span class="amber">CISCO SIR</span></div>
+        <div class="gauge">
+          <svg viewBox="0 0 200 130" class="gauge-svg" data-gauge="3" data-max="4" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#fb923c" stroke-width="10" stroke-linecap="round" class="gauge-arc-fill"/>
+            <line x1="100" y1="110" x2="100" y2="40" stroke="#fafaf9" stroke-width="2.5" class="gauge-needle" style="transform-origin:100px 110px;transform:rotate(-90deg);transition:none"/>
+            <circle cx="100" cy="110" r="6" fill="#0a0a0a" stroke="#f5a524" stroke-width="2"/>
+            <text x="20" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">LOW</text>
+            <text x="160" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">CRIT</text>
+            <text x="100" y="78" font-family="IBM Plex Sans Condensed" font-size="22" font-weight="700" text-anchor="middle" fill="#fafaf9">HIGH</text>
+            <text x="100" y="92" font-family="IBM Plex Mono" font-size="8" letter-spacing="1.5" text-anchor="middle" fill="#57534e">CISCO · SIR</text>
+          </svg>
+        </div>
+        <h4>Cisco SIR</h4>
+        <p data-i18n="s2.c3">Cisco Security Impact Rating for Cisco platforms — speaks the vendor's own language so PSIRT advisories line up cleanly.</p>
+      </div>
+
+      <div class="score-card">
+        <div class="num">SCORE · 04 / 04 · <span class="amber"><span class="brandcase">NatMesh</span> · 0–100</span></div>
+        <div class="gauge">
+          <svg viewBox="0 0 200 130" class="gauge-svg" data-gauge="87" data-max="100" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#f5a524" stroke-width="10" stroke-linecap="round" class="gauge-arc-fill"/>
+            <line x1="100" y1="110" x2="100" y2="40" stroke="#fafaf9" stroke-width="2.5" class="gauge-needle" style="transform-origin:100px 110px;transform:rotate(-90deg);transition:none"/>
+            <circle cx="100" cy="110" r="6" fill="#0a0a0a" stroke="#f5a524" stroke-width="2"/>
+            <text x="20" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">0</text>
+            <text x="170" y="125" font-family="IBM Plex Mono" font-size="9" fill="#57534e">100</text>
+            <text x="100" y="78" font-family="IBM Plex Sans Condensed" font-size="22" font-weight="700" text-anchor="middle" fill="#fafaf9">87</text>
+            <text x="100" y="92" font-family="IBM Plex Mono" font-size="8" letter-spacing="1.5" text-anchor="middle" fill="#57534e">ROLE-WEIGHTED</text>
+          </svg>
+        </div>
+        <h4 data-i18n="s2.c4t">Composite · Role-Weighted</h4>
+        <p data-i18n="s2.c4">Our 0–100. Same misconfig scores higher on a border firewall than an access switch, because exposure context is the whole point.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     COMPLIANCE FRAMEWORKS
+═══════════════════════════════════════════════════════════ -->
+<section id="compliance" style="background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="shell">
+
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s3.ey">§ 03 · COMPLIANCE</span><span data-i18n="s3.ey2">SIX FRAMEWORKS · ONE PASS</span></div>
+        <h2 class="h-section" data-i18n="s3.h">Audit evidence,<br>pre-mapped.</h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s3.lede">
+          Per-control pass/fail with evidence generated automatically.
+          Hand the PDF to a QSA, an Authorizing Official, or a CMMC C3PAO and
+          they read it the way they already think about your network.
+        </p>
+      </div>
+    </div>
+
+    <div class="comp-grid reveal">
+
+      <div class="comp-folder">
+        <div class="stamp">CAT-I / II / III</div>
+        <h3>DISA STIG</h3>
+        <div class="sub" data-i18n="s3.f1sub">12-rule dedicated pack · NIST 800-53 r5</div>
+        <p data-i18n="s3.f1p">Every finding maps to a STIG Vul-ID with severity and CCI references. RMF-ready evidence package out of the box.</p>
+        <div class="ctrls">
+          <span class="ctrl">CAT I</span><span class="ctrl">CAT II</span><span class="ctrl">CAT III</span>
+        </div>
+      </div>
+
+      <div class="comp-folder">
+        <div class="stamp">PCI-DSS · v4.0</div>
+        <h3>PCI-DSS 4.0</h3>
+        <div class="sub" data-i18n="s3.f2sub">Requirements 1 · 2 · 6 · 8 · 10</div>
+        <p data-i18n="s3.f2p">Dedicated 10-rule pack written against the v4.0 final standard. QSA-grade prose evidence with control numbers.</p>
+        <div class="ctrls">
+          <span class="ctrl">REQ 1</span><span class="ctrl">REQ 2</span><span class="ctrl">REQ 6</span><span class="ctrl">REQ 8</span><span class="ctrl">REQ 10</span>
+        </div>
+      </div>
+
+      <div class="comp-folder">
+        <div class="stamp">CMMC · LEVEL 2 / 3</div>
+        <h3>CMMC 2.0</h3>
+        <div class="sub" data-i18n="s3.f3sub">NIST 800-171 + 800-172</div>
+        <p data-i18n="s3.f3p">14 dedicated CMMC rules tied to the assessment objectives every DIB contractor will see during a C3PAO walkthrough.</p>
+        <div class="ctrls">
+          <span class="ctrl">AC</span><span class="ctrl">SC</span><span class="ctrl">IA</span><span class="ctrl">AU</span><span class="ctrl">SI</span>
+        </div>
+      </div>
+
+      <div class="comp-folder">
+        <div class="stamp">NIST · 800-53 r5</div>
+        <h3>NIST 800-53</h3>
+        <div class="sub" data-i18n="s3.f4sub">AC · SC · IA · AU · CM · SI · SA</div>
+        <p data-i18n="s3.f4p">Control families tagged on every rule. Direct evidence into FedRAMP, FISMA, and StateRAMP assessment packages.</p>
+        <div class="ctrls">
+          <span class="ctrl">AC-3</span><span class="ctrl">SC-7</span><span class="ctrl">IA-2</span><span class="ctrl">AU-2</span>
+        </div>
+      </div>
+
+      <div class="comp-folder">
+        <div class="stamp">CIS · BENCHMARKS</div>
+        <h3>CIS Controls</h3>
+        <div class="sub" data-i18n="s3.f5sub">CSC v8 · cross-tagged</div>
+        <p data-i18n="s3.f5p">Center for Internet Security control numbers attached to every rule for cross-walk with audit programs.</p>
+        <div class="ctrls">
+          <span class="ctrl">CSC 4</span><span class="ctrl">CSC 5</span><span class="ctrl">CSC 6</span><span class="ctrl">CSC 12</span>
+        </div>
+      </div>
+
+      <div class="comp-folder">
+        <div class="stamp">NIST · 800-63B</div>
+        <h3>800-63B Auth</h3>
+        <div class="sub" data-i18n="s3.f6sub">Password &amp; identity assurance</div>
+        <p data-i18n="s3.f6p">Detects every Cisco password type (0, 5, 7, 8, 9) and grades against the 800-63B memorized-secret guidance.</p>
+        <div class="ctrls">
+          <span class="ctrl">TYPE 0</span><span class="ctrl">TYPE 5</span><span class="ctrl">TYPE 7</span><span class="ctrl">TYPE 8</span><span class="ctrl">TYPE 9</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     THREE-UP: Zero Trust / Drift / Tamper Audit
+═══════════════════════════════════════════════════════════ -->
+<section id="integrity">
+  <div class="shell">
+
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s4.ey">§ 04 · DEPTH</span><span data-i18n="s4.ey2">WHAT A SCANNER WILL NEVER SEE</span></div>
+        <h2 class="h-section" data-i18n="s4.h">Three things<br>nothing else does.</h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s4.lede">
+          A port scanner reads what's open. NatMesh reads what's <em>written</em> —
+          and what's been written for the last twelve months. Segmentation
+          posture, drift over time, and a tamper-evident chain of every
+          scan you ever ran.
+        </p>
+      </div>
+    </div>
+
+    <div class="three-grid reveal">
+
+      <!-- Zero Trust -->
+      <div class="three-card">
+        <div class="viz">
+          <svg viewBox="0 0 280 200" width="100%" height="100%" class="zt-nodes" aria-hidden="true">
+            <defs>
+              <pattern id="zt-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="280" height="200" fill="url(#zt-grid)"/>
+            <line x1="50" y1="60" x2="140" y2="100" class="deny"/>
+            <line x1="140" y1="100" x2="230" y2="60"/>
+            <line x1="140" y1="100" x2="50" y2="150"/>
+            <line x1="140" y1="100" x2="230" y2="150"/>
+            <line x1="50" y1="60" x2="230" y2="150" class="deny"/>
+            <circle cx="50" cy="60" r="11"/>
+            <text x="50" y="44" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#a8a29e">UNTRUST</text>
+            <circle cx="230" cy="60" r="11"/>
+            <text x="230" y="44" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#a8a29e">DMZ</text>
+            <circle cx="140" cy="100" r="14" stroke-width="2"/>
+            <text x="140" y="125" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#f5a524">FW-CORE</text>
+            <circle cx="50" cy="150" r="11"/>
+            <text x="50" y="172" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#a8a29e">TRUST</text>
+            <circle cx="230" cy="150" r="11" class="deny"/>
+            <text x="230" y="172" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#f87171">PROD-DB</text>
+            <text x="140" y="20" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" letter-spacing="1.5" fill="#f5a524">ZONE GRAPH · POLICIES</text>
+            <text x="100" y="80" font-family="IBM Plex Mono" font-size="9" fill="#f87171">DENY</text>
+            <text x="160" y="135" font-family="IBM Plex Mono" font-size="9" fill="#f87171">DENY</text>
+          </svg>
+        </div>
+        <div class="eyebrow" data-i18n="s4.c1e">Zero Trust scoring</div>
+        <h3 data-i18n="s4.c1h">Segmentation, graded.</h3>
+        <p data-i18n="s4.c1p">Every firewall, ACL, and zone policy is scored on a Zero Trust scale — implicit any-any, over-permissive egress, missing micro-segmentation all surface as ranked findings.</p>
+      </div>
+
+      <!-- Drift -->
+      <div class="three-card">
+        <div class="viz">
+          <svg viewBox="0 0 280 200" width="100%" height="100%" class="drift-svg" data-drift-chart aria-hidden="true">
+            <text x="14" y="20" font-family="IBM Plex Mono" font-size="9" letter-spacing="1.5" fill="#f5a524">DRIFT · 12 SCANS · 90 DAYS</text>
+            <line x1="14" y1="110" x2="266" y2="110" class="drift-grid"/>
+            <line x1="14" y1="70" x2="266" y2="70" class="drift-grid"/>
+            <line x1="14" y1="30" x2="266" y2="30" class="drift-grid"/>
+            <!-- bars: 12 -->
+            <g>
+              <rect class="drift-bar" x="20"  y="110" width="14" height="0" data-h="42"/>
+              <rect class="drift-bar" x="40"  y="110" width="14" height="0" data-h="52"/>
+              <rect class="drift-bar crit" x="60"  y="110" width="14" height="0" data-h="68"/>
+              <rect class="drift-bar crit" x="80"  y="110" width="14" height="0" data-h="74"/>
+              <rect class="drift-bar" x="100" y="110" width="14" height="0" data-h="62"/>
+              <rect class="drift-bar" x="120" y="110" width="14" height="0" data-h="46"/>
+              <rect class="drift-bar" x="140" y="110" width="14" height="0" data-h="38"/>
+              <rect class="drift-bar" x="160" y="110" width="14" height="0" data-h="30"/>
+              <rect class="drift-bar" x="180" y="110" width="14" height="0" data-h="24"/>
+              <rect class="drift-bar" x="200" y="110" width="14" height="0" data-h="20"/>
+              <rect class="drift-bar" x="220" y="110" width="14" height="0" data-h="16"/>
+              <rect class="drift-bar" x="240" y="110" width="14" height="0" data-h="12"/>
+            </g>
+            <text x="14" y="130" font-family="IBM Plex Mono" font-size="8" fill="#57534e">FEB</text>
+            <text x="138" y="130" font-family="IBM Plex Mono" font-size="8" fill="#57534e">APR</text>
+            <text x="240" y="130" font-family="IBM Plex Mono" font-size="8" fill="#57534e">MAY</text>
+            <text x="14" y="155" font-family="IBM Plex Mono" font-size="9" fill="#a8a29e">Δ FINDINGS <tspan fill="#4ade80">−71%</tspan> · NET REGRESSIONS <tspan fill="#f87171">2</tspan></text>
+            <text x="14" y="172" font-family="IBM Plex Mono" font-size="9" fill="#57534e">BASELINE · clr-2026-02-04 · GOLDEN</text>
+          </svg>
+        </div>
+        <div class="eyebrow" data-i18n="s4.c2e">Drift detection</div>
+        <h3 data-i18n="s4.c2h">Every scan, queryable.</h3>
+        <p data-i18n="s4.c2p">Local DuckDB keeps every scan. Compare any two runs and NatMesh shows you which findings were fixed, which regressed, and what's new since the golden baseline.</p>
+      </div>
+
+      <!-- Hash chain -->
+      <div class="three-card">
+        <div class="viz" style="background:var(--bg-0)">
+          <div style="padding:14px 4px 0 4px">
+            <div class="hash-row"><span class="idx">12</span><span><span style="color:var(--txt)">scan · 2026-05-18T14:22Z</span><br><span class="hash">sha256=a3f4…8c2b · prev=7b21…0e91</span></span></div>
+            <div class="hash-row"><span class="idx">11</span><span><span style="color:var(--txt)">scan · 2026-05-17T09:04Z</span><br><span class="hash">sha256=7b21…0e91 · prev=fe12…d3b4</span></span></div>
+            <div class="hash-row tamper"><span class="idx">10</span><span><span>scan · 2026-05-15T18:31Z</span><br><span class="hash">sha256=MISMATCH · CHAIN BROKEN</span></span></div>
+            <div class="hash-row"><span class="idx">09</span><span><span style="color:var(--txt)">scan · 2026-05-14T11:17Z</span><br><span class="hash">sha256=4c98…a712 · prev=2e1f…b8a3</span></span></div>
+          </div>
+        </div>
+        <div class="eyebrow" data-i18n="s4.c3e">Tamper-evident audit</div>
+        <h3 data-i18n="s4.c3h">If it was edited, you'll know.</h3>
+        <p data-i18n="s4.c3p">Every scan event is hash-chained to the previous. <code style="font-family:var(--f-mono);color:var(--amber)">verify_audit_integrity()</code> walks the chain and flags any break — even one altered byte.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     NatMesh vs NIPPER · REDACTED COMPARISON
+═══════════════════════════════════════════════════════════ -->
+<section class="vs-section" id="comparison">
+  <div class="shell">
+
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s5.ey">§ 05 · COMPARISON</span><span data-i18n="s5.ey2">DECLASSIFIED · FOR DISTRIBUTION</span></div>
+        <h2 class="h-section" data-i18n="s5.h">Nipper Omnisight<br><span style="color:var(--amber)">vs <span class="brandcase">NatMesh</span>.</span></h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s5.lede">
+          Nipper had the category to itself for a decade. The engine hasn't
+          meaningfully advanced since 2018. Here is the same feature list,
+          side by side. Black bars are where the incumbent has nothing to say.
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="vs-headerline"><span>FILE · COMPETITIVE-MATRIX-2026Q2.PDF</span><span class="bar"></span><span data-i18n="s5.rows">13 ROWS</span></div>
+
+      <div class="vs-table">
+        <div class="vs-row head">
+          <div data-i18n="s5.cap">CAPABILITY</div>
+          <div class="col-them">NIPPER OMNISIGHT</div>
+          <div class="col-us"><span class="brandcase">NatMesh</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r1">Vendor parsers<span class="sub">cisco · juniper · forti · palo · …</span></div>
+          <div class="col-them">~15</div>
+          <div class="col-us"><span class="vs-mark yes">28</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r2">Security rules<span class="sub">checked patterns</span></div>
+          <div class="col-them">~70</div>
+          <div class="col-us"><span class="vs-mark yes">202</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r3">Offline-only, air-gap compatible<span class="sub">no telemetry, no license server</span></div>
+          <div class="col-them"><span class="vs-mark yes" data-i18n="s5.yes">Yes</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.yes">Yes</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r4">Contextual risk by device role<span class="sub">border vs edge vs access</span></div>
+          <div class="col-them"><span class="redact" style="width:140px;height:18px">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r4v">Role-weighted</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r5">Zero Trust segmentation scoring<span class="sub">policy graph + grade</span></div>
+          <div class="col-them"><span class="redact" style="width:120px;height:18px">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r5v">Built-in</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r6">CVE correlation, offline<span class="sub">static KB + NVD cache</span></div>
+          <div class="col-them"><span class="redact" style="width:100px;height:18px">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes">22 + NVD</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r7">Dedicated CMMC 2.0 rule pack<span class="sub">L2 + L3</span></div>
+          <div class="col-them"><span class="vs-mark no">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r7v">14 rules</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r8">Dedicated DISA STIG rule pack<span class="sub">CAT I/II/III</span></div>
+          <div class="col-them"><span class="vs-mark no">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r8v">12 rules</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r9">SARIF output for CI/CD<span class="sub">GitHub Actions · Azure DevOps</span></div>
+          <div class="col-them"><span class="vs-mark no">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r9v">First-class</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r10">Drift detection scan-over-scan<span class="sub">DuckDB · golden baseline</span></div>
+          <div class="col-them"><span class="vs-mark no">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r10v">90-day window</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r11">Tamper-evident audit chain<span class="sub">hash-linked events</span></div>
+          <div class="col-them"><span class="redact" style="width:100px;height:18px">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes">SHA-256</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r12">Extensible rules — no code<span class="sub">declarative YAML packs</span></div>
+          <div class="col-them"><span class="vs-mark no">&nbsp;</span></div>
+          <div class="col-us"><span class="vs-mark yes">YAML</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r13">White-label reports<span class="sub">company / logo / footer</span></div>
+          <div class="col-them"><span class="vs-mark no" data-i18n="s5.r13t">Paid add-on</span></div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r13v">Included</span></div>
+        </div>
+
+        <div class="vs-row">
+          <div class="feat" data-i18n="s5.r14">License model<span class="sub">how you pay</span></div>
+          <div class="col-them" data-i18n="s5.r14t">Per-device subscription</div>
+          <div class="col-us"><span class="vs-mark yes" data-i18n="s5.r14v">One-time, per-machine</span></div>
+        </div>
+
+      </div>
+
+      <div class="vs-summary">
+        <div class="stamp" data-i18n="s5.stamp">DECLASSIFIED<span>05·18·2026</span></div>
+        <p data-i18n="s5.sum">
+          On every modern capability — <strong>Zero Trust scoring, role-weighted risk,
+          offline CVE correlation, SARIF/CI-CD output, drift detection, and a tamper-evident
+          audit trail</strong> — Nipper has nothing to put in the column. We respect the
+          incumbent. We just shipped the next decade of the category.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     PERSONAS
+═══════════════════════════════════════════════════════════ -->
+<section id="personas">
+  <div class="shell">
+
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s6.ey">§ 06 · OPERATORS</span><span data-i18n="s6.ey2">FOUR PROFILES · ONE LICENSE</span></div>
+        <h2 class="h-section" data-i18n="s6.h">Who runs NatMesh.</h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s6.lede">
+          The buyer doesn't change the engine. The engine changes the buyer's
+          mandate. Defense contractors, payment-card teams, MSSPs, and
+          DevSecOps all ship the same binary.
+        </p>
+      </div>
+    </div>
+
+    <div class="persona-grid reveal">
+
+      <div class="persona">
+        <div class="ribbon">CMMC · L3</div>
+        <div class="for-use" data-i18n="s6.use1">FOR USE BY · 01</div>
+        <h4 data-i18n="s6.p1h">Defense &amp; Federal</h4>
+        <ul>
+          <li data-i18n="s6.p1a">Air-gap requirement eliminates every SaaS competitor on the list.</li>
+          <li data-i18n="s6.p1b">DISA STIG + CMMC 2.0 packs ship pre-built — no consultant engagement.</li>
+          <li data-i18n="s6.p1c">RMF-ready evidence drops straight into the AO's package.</li>
+        </ul>
+      </div>
+
+      <div class="persona">
+        <div class="ribbon">PCI · QSA</div>
+        <div class="for-use" data-i18n="s6.use2">FOR USE BY · 02</div>
+        <h4 data-i18n="s6.p2h">Financial · PCI</h4>
+        <ul>
+          <li data-i18n="s6.p2a">Tamper-evident audit log — exactly what a QSA wants to see.</li>
+          <li data-i18n="s6.p2b">PCI-DSS 4.0 control evidence with Req 1/2/6/8/10 mapping.</li>
+          <li data-i18n="s6.p2c">White-label PDF for the bank's annual ROC supporting evidence.</li>
+        </ul>
+      </div>
+
+      <div class="persona">
+        <div class="ribbon">MSSP · BATCH</div>
+        <div class="for-use" data-i18n="s6.use3">FOR USE BY · 03</div>
+        <h4 data-i18n="s6.p3h">MSSPs &amp; Consultancies</h4>
+        <ul>
+          <li data-i18n="s6.p3a">Headless CLI scans 100 configs in a batch from a single workstation.</li>
+          <li data-i18n="s6.p3b">White-labeled PDFs swap company name, logo, and footer per client.</li>
+          <li data-i18n="s6.p3c">One per-analyst machine license — no per-device meter to manage.</li>
+        </ul>
+      </div>
+
+      <div class="persona">
+        <div class="ribbon">CI / CD</div>
+        <div class="for-use" data-i18n="s6.use4">FOR USE BY · 04</div>
+        <h4 data-i18n="s6.p4h">DevSecOps</h4>
+        <ul>
+          <li data-i18n="s6.p4a">SARIF output renders natively in GitHub &amp; Azure DevOps PRs.</li>
+          <li data-i18n="s6.p4b">Exit code 2 on critical/high — fail the build, block the merge.</li>
+          <li data-i18n="s6.p4c">Config-as-code friendly. The rule engine is itself YAML.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     CI/CD INTEGRATION
+═══════════════════════════════════════════════════════════ -->
+<section id="cicd" style="background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="shell">
+
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s7.ey">§ 07 · CI/CD</span><span data-i18n="s7.ey2">SARIF · FIRST-CLASS</span></div>
+        <h2 class="h-section" data-i18n="s7.h">Drop it in your<br>pipeline. Done.</h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s7.lede">
+          <span class="mono" style="color:var(--amber)">natmesh-cli</span> is a single static
+          binary. Add a step to your GitHub Actions or Azure DevOps pipeline.
+          The same SARIF that flows into GitHub Security tab also lands in
+          Defender, Sentinel, and any modern SIEM.
+        </p>
+      </div>
+    </div>
+
+    <div class="cicd-wrap reveal">
+
+      <div class="code-box">
+        <div class="code-head">
+          <span class="label">.github/workflows/audit.yml</span>
+          <span>GITHUB ACTIONS</span>
+        </div>
+        <div class="code-body"><pre style="margin:0;font-family:var(--f-mono);font-size:12.5px;line-height:1.75;color:var(--txt-2)"><span class="c"># Audit every config on push to main</span>
+<span class="k">name</span>: <span class="v">network-config-audit</span>
+<span class="k">on</span>: [<span class="v">push</span>, <span class="v">pull_request</span>]
+
+<span class="k">jobs</span>:
+  <span class="k">audit</span>:
+    <span class="k">runs-on</span>: <span class="v">ubuntu-latest</span>
+    <span class="k">steps</span>:
+      - <span class="k">uses</span>: <span class="v">actions/checkout@v4</span>
+
+      - <span class="k">name</span>: <span class="v">Run NatMesh</span>
+        <span class="k">run</span>: <span class="p">|</span>
+          <span class="v">natmesh-cli scan</span> <span class="p">\</span>
+            <span class="v">--config ./configs/*.cfg</span> <span class="p">\</span>
+            <span class="v">--format sarif</span> <span class="p">\</span>
+            <span class="v">--exit-on critical,high</span> <span class="p">\</span>
+            <span class="v">--out natmesh.sarif</span>
+
+      - <span class="k">uses</span>: <span class="v">github/codeql-action/upload-sarif@v3</span>
+        <span class="k">with</span>:
+          <span class="k">sarif_file</span>: <span class="v">natmesh.sarif</span>
+</pre></div>
+      </div>
+
+      <div class="code-box">
+        <div class="code-head">
+          <span class="label">natmesh.sarif (excerpt)</span>
+          <span>FINDING · SARIF v2.1.0</span>
+        </div>
+        <div class="code-body"><pre style="margin:0;font-family:var(--f-mono);font-size:12.5px;line-height:1.75;color:var(--txt-2)"><span class="p">{</span>
+  <span class="k">"ruleId"</span>: <span class="s">"natmesh.snmp-001"</span>,
+  <span class="k">"level"</span>: <span class="s">"error"</span>,
+  <span class="k">"message"</span>: { <span class="k">"text"</span>: <span class="s">"Default SNMP community 'public'"</span> },
+  <span class="k">"locations"</span>: [{
+    <span class="k">"physicalLocation"</span>: {
+      <span class="k">"artifactLocation"</span>: { <span class="k">"uri"</span>: <span class="s">"edge-fw-01.cfg"</span> },
+      <span class="k">"region"</span>: { <span class="k">"startLine"</span>: <span class="v">42</span> }
+    }
+  }],
+  <span class="k">"properties"</span>: {
+    <span class="k">"cvss"</span>: <span class="v">9.8</span>,
+    <span class="k">"stig"</span>: <span class="s">"CAT-I"</span>,
+    <span class="k">"cwe"</span>: <span class="s">"CWE-798"</span>,
+    <span class="k">"natmesh-role-score"</span>: <span class="v">87</span>,
+    <span class="k">"compliance"</span>: [<span class="s">"PCI-DSS 2.1"</span>, <span class="s">"STIG-V-220547"</span>]
+  }
+<span class="p">}</span>
+
+<span class="c"># Pipeline summary</span>
+<span class="o">✓</span> <span class="k">scan complete</span>: <span class="v">1247 lines · 12 findings · 3 critical</span>
+<span class="o">✗</span> <span class="k">exit code 2</span>: <span class="v">build blocked by critical findings</span>
+</pre></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     PRICING
+═══════════════════════════════════════════════════════════ -->
+<section id="pricing">
+  <div class="shell">
+
+    <div class="section-head reveal">
+      <div>
+        <div class="meta"><span class="id" data-i18n="s8.ey">§ 08 · LICENSE</span><span data-i18n="s8.ey2">MACHINE-LOCKED · OFFLINE</span></div>
+        <h2 class="h-section" data-i18n="s8.h">One license file.<br>One machine. No server.</h2>
+      </div>
+      <div>
+        <p class="lede" data-i18n="s8.lede">
+          Pay once. The license file <span class="mono" style="color:var(--amber)">natmesh.lic</span>
+          binds to a machine ID and works forever on that workstation.
+          No phone-home. No subscription meter. No SaaS dependency to lose
+          when your contract changes.
+        </p>
+      </div>
+    </div>
+
+    <div class="price-grid reveal">
+
+      <div class="price-tier">
+        <div class="tag"><span>TIER · 01</span><span>SOLO</span></div>
+        <h3 data-i18n="s8.t1h">Analyst</h3>
+        <p class="blurb" data-i18n="s8.t1b">One workstation. One operator. Everything an in-house security engineer needs to audit their fleet.</p>
+        <div class="price"><span class="cur">$</span>1,499</div>
+        <div class="per" data-i18n="s8.t1per">One-time · per machine · perpetual</div>
+        <ul>
+          <li data-i18n="s8.t1l1">All 202 security rules</li>
+          <li data-i18n="s8.t1l2">All 28 vendor parsers</li>
+          <li data-i18n="s8.t1l3">All 6 compliance frameworks</li>
+          <li data-i18n="s8.t1l4">PDF · HTML · Excel · CSV · SARIF · JSON</li>
+          <li data-i18n="s8.t1l5">Drift &amp; tamper-evident audit chain</li>
+          <li data-i18n="s8.t1l6">GUI + headless CLI</li>
+          <li class="no" data-i18n="s8.t1l7">White-label branding</li>
+          <li class="no" data-i18n="s8.t1l8">Priority support SLA</li>
+        </ul>
+        <a href="#contact" class="pbtn" data-i18n="s8.req">Request License</a>
+      </div>
+
+      <div class="price-tier featured">
+        <div class="tag"><span>TIER · 02</span><span class="featured-mark" data-i18n="s8.most">◆ MOST CHOSEN</span></div>
+        <h3 data-i18n="s8.t2h">Field Unit</h3>
+        <p class="blurb" data-i18n="s8.t2b">For MSSPs and consultancies. Five analyst seats, white-label reports, scheduled batch scans.</p>
+        <div class="price"><span class="cur">$</span>5,990</div>
+        <div class="per" data-i18n="s8.t2per">One-time · 5 machines · perpetual</div>
+        <ul>
+          <li data-i18n="s8.t2l1">Everything in Analyst</li>
+          <li data-i18n="s8.t2l2">Five machine-locked licenses</li>
+          <li data-i18n="s8.t2l3">White-label reports (logo · name · footer)</li>
+          <li data-i18n="s8.t2l4">Scheduled scans + golden baseline alerts</li>
+          <li data-i18n="s8.t2l5">Batch CLI · 100+ configs / run</li>
+          <li data-i18n="s8.t2l6">CI/CD pipeline templates</li>
+          <li data-i18n="s8.t2l7">Email support · 1 business day</li>
+          <li class="no" data-i18n="s8.t2l8">On-prem training engagement</li>
+        </ul>
+        <a href="#contact" class="pbtn" data-i18n="s8.req">Request License</a>
+      </div>
+
+      <div class="price-tier">
+        <div class="tag"><span>TIER · 03</span><span>FLEET</span></div>
+        <h3 data-i18n="s8.t3h">Command</h3>
+        <p class="blurb" data-i18n="s8.t3b">For defense primes, federal SI, and large financial. Unlimited seats. Custom rule packs. On-site enablement.</p>
+        <div class="price" style="font-size:32px;letter-spacing:-0.005em" data-i18n="s8.t3price">Custom</div>
+        <div class="per" data-i18n="s8.t3per">Contact for quote</div>
+        <ul>
+          <li data-i18n="s8.t3l1">Everything in Field Unit</li>
+          <li data-i18n="s8.t3l2">Unlimited machine licenses</li>
+          <li data-i18n="s8.t3l3">Custom rule packs (we write, you own)</li>
+          <li data-i18n="s8.t3l4">Air-gap install &amp; classified-net guidance</li>
+          <li data-i18n="s8.t3l5">Dedicated Signal channel + named TAM</li>
+          <li data-i18n="s8.t3l6">On-site enablement (1 week, included)</li>
+          <li data-i18n="s8.t3l7">Source escrow available</li>
+          <li data-i18n="s8.t3l8">Priority CVE-pack updates</li>
+        </ul>
+        <a href="#contact" class="pbtn" data-i18n="s8.talk">Talk to us</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     FAQ
+═══════════════════════════════════════════════════════════ -->
+<section id="faq" style="background:var(--bg-1);border-top:1px solid var(--line)">
+  <div class="shell">
+
+    <div class="faq-layout">
+
+      <div class="faq-intro reveal">
+        <div class="meta" style="font-family:var(--f-mono);font-size:10.5px;letter-spacing:0.18em;color:var(--txt-3);text-transform:uppercase;margin-bottom:14px">
+          <span style="color:var(--amber)">§ 09 · FAQ</span>
+        </div>
+        <h2 class="h-section" data-i18n="s9.h">Questions<br>we get often.</h2>
+        <p class="lede" style="margin-top:18px" data-i18n="s9.lede">
+          If something isn't here, ask. Engineers answer Engineering.
+        </p>
+      </div>
+
+      <div class="faq-list reveal">
+
+        <div class="faq-item">
+          <button class="faq-q"><span class="num">Q·01</span><span data-i18n="s9.q1">Does NatMesh ever phone home?</span><span class="chev"></span></button>
+          <div class="faq-a"><div data-i18n="s9.a1"><p>No. Zero telemetry. No license server. No update beacon. <code>natmesh.lic</code> is verified locally against the machine ID. The binary runs on air-gapped Class C networks without modification.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q"><span class="num">Q·02</span><span data-i18n="s9.q2">How is CVE matching offline?</span><span class="chev"></span></button>
+          <div class="faq-a"><div data-i18n="s9.a2"><p>A curated KB of 22 high-impact real-world CVEs ships in the binary (CVE-2024-3400, CVE-2024-21762, CVE-2023-27997, CVE-2022-42475, CVE-2018-0101, and others). An offline NVD JSON cache lives at <code>~/.natmesh/nvd_cache/</code>. The live NVD API is opt-in only.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q"><span class="num">Q·03</span><span data-i18n="s9.q3">Can my team add custom rules?</span><span class="chev"></span></button>
+          <div class="faq-a"><div data-i18n="s9.a3"><p>Yes. Rules are pure YAML — <code>prerequisite_patterns</code>, <code>required_patterns</code>, <code>negative_patterns</code>, plus the narrative fields that flow directly into the report (<code>checked_text</code>, <code>matters_text</code>, <code>impact_rating</code>). No Python required to extend the engine.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q"><span class="num">Q·04</span><span data-i18n="s9.q4">What's actually different about your scoring?</span><span class="chev"></span></button>
+          <div class="faq-a"><div data-i18n="s9.a4"><p>Four parallel scores per finding: CVSS v3.1, DISA STIG CAT, Cisco SIR, and a NatMesh 0–100 composite weighted by the device's role in the traffic path. The same SNMP "public" community on a border firewall and an access switch produce very different role-weighted numbers.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q"><span class="num">Q·05</span><span data-i18n="s9.q5">How is the audit trail tamper-evident?</span><span class="chev"></span></button>
+          <div class="faq-a"><div data-i18n="s9.a5"><p>Every scan event is hash-chained to the prior event. <code>verify_audit_integrity()</code> walks the chain end-to-end. A single altered byte anywhere in the history breaks the chain and is flagged.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q"><span class="num">Q·06</span><span data-i18n="s9.q6">What does the CLI exit code mean?</span><span class="chev"></span></button>
+          <div class="faq-a"><div data-i18n="s9.a6"><p><code>natmesh-cli</code> exits <code>0</code> on clean, <code>1</code> on info/low findings, and <code>2</code> on any critical or high finding. Drop it in CI with <code>--exit-on critical,high</code> and your pipeline will block the merge automatically.</p></div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q"><span class="num">Q·07</span><span data-i18n="s9.q7">Is it really a one-time license?</span><span class="chev"></span></button>
+          <div class="faq-a"><div data-i18n="s9.a7"><p>Yes. The license file binds to a machine ID and is perpetual on that workstation. Annual maintenance is optional — and only buys you new rule packs and CVE updates. The engine you bought continues to run regardless.</p></div></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     CTA
+═══════════════════════════════════════════════════════════ -->
+<section class="cta-section" id="contact">
+  <div class="shell" style="position:relative">
+    <div class="cta-meta">REQUEST · CLR-LIC-2026 · FORM A</div>
+    <h2 data-i18n="cta.h">Pull the trigger<br>on the audit you've been<br>deferring.</h2>
+    <p data-i18n="cta.p">Fifteen-day evaluation license. Drops onto one machine. No demos to sit through, no SDR to dodge — the binary just runs.</p>
+    <div class="cta-btns">
+      <a href="mailto:license@natmesh.dev?subject=NatMesh%20License%20Request" class="btn btn-primary btn-stamp" data-i18n="cta.btn1">
+        Request License File
+        <span class="arrow">→</span>
+      </a>
+      <a href="mailto:hello@natmesh.dev" class="btn" data-i18n="cta.btn2">Talk to engineering</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="shell">
+    <div class="foot-grid">
+
+      <div class="foot-brand">
+        <div class="brand" style="display:flex;align-items:center;gap:14px">
+          <span class="brand-mark">NM</span>
+          <span>
+            <span class="brand-name">NatMesh</span><span class="brand-tag" data-i18n="brand.tag">CONFIG · SECURITY · AUDIT</span>
+          </span>
+        </div>
+        <div class="mono-block" data-i18n="foot.mono">
+          BUILD · <span class="amber">1.4.2</span><br>
+          RULES · <span class="amber">202</span><br>
+          PARSERS · <span class="amber">28</span><br>
+          NVD-CACHE · <span class="amber">2026-05-15</span><br>
+          TELEMETRY · <span class="amber">NONE</span>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h5 data-i18n="foot.c1h">Engine</h5>
+        <ul>
+          <li><a href="#scanner" data-i18n="foot.c1a">Live scanner</a></li>
+          <li><a href="#scoring" data-i18n="foot.c1b">Scoring systems</a></li>
+          <li><a href="#integrity" data-i18n="foot.c1c">Drift &amp; audit chain</a></li>
+          <li><a href="#integrity" data-i18n="foot.c1d">Zero Trust</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5 data-i18n="foot.c2h">Compliance</h5>
+        <ul>
+          <li><a href="#compliance">DISA STIG</a></li>
+          <li><a href="#compliance">CMMC 2.0</a></li>
+          <li><a href="#compliance">PCI-DSS 4.0</a></li>
+          <li><a href="#compliance">NIST 800-53</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5 data-i18n="foot.c3h">Compare</h5>
+        <ul>
+          <li><a href="#comparison" data-i18n="foot.c3a">vs Nipper</a></li>
+          <li><a href="#personas" data-i18n="foot.c3b">vs SaaS scanners</a></li>
+          <li><a href="#personas" data-i18n="foot.c3c">vs NCM tools</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5 data-i18n="foot.c4h">Contact</h5>
+        <ul>
+          <li><a href="mailto:license@natmesh.dev">license@natmesh.dev</a></li>
+          <li><a href="mailto:hello@natmesh.dev">hello@natmesh.dev</a></li>
+          <li><a href="mailto:security@natmesh.dev">security@natmesh.dev</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 <span class="brandcase">NatMesh</span> · <span class="amber" data-i18n="cb.opuse">FOR OPERATIONAL USE</span></span>
+      <span data-utc-clock>—</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════
+     BOTTOM CLASSIFICATION BAR
+═══════════════════════════════════════════════════════════ -->
+<div class="classbar bottom" aria-hidden="true">
+  <div class="classbar-track">
+    <span data-i18n="cb.eod">END OF DOCUMENT</span>
+    <span><span class="brandcase">NatMesh</span> · CSC · 1.4.2</span>
+    <span data-i18n="cb.dist">DISTRIBUTION · STATEMENT A</span>
+    <span data-i18n="cb.destroy">DESTROY WHEN NO LONGER NEEDED</span>
+    <span data-i18n="cb.page">PAGE 01 / 01</span>
+    <span data-i18n="cb.eod">END OF DOCUMENT</span>
+    <span><span class="brandcase">NatMesh</span> · CSC · 1.4.2</span>
+    <span data-i18n="cb.dist">DISTRIBUTION · STATEMENT A</span>
+    <span data-i18n="cb.destroy">DESTROY WHEN NO LONGER NEEDED</span>
+    <span data-i18n="cb.page">PAGE 01 / 01</span>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="main.js"></script>
+<script src="scanner.js"></script>
+</body>
+</html>
